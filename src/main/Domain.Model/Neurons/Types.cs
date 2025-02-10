@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace works.ei8.Cortex.MemoryImage.Domain.Model.Neurons
+namespace ei8.Cortex.Spiker.Domain.Model.Neurons
 {
     public enum NeurotransmitterEffect
     {
         Inhibit = -1,
         NotSet = 0,
-        Excite = 1        
+        Excite = 1
     }
 
     public struct Constants

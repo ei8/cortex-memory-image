@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using works.ei8.Cortex.MemoryImage.Domain.Model.Neurons;
+﻿using ei8.Cortex.Spiker.Domain.Model.Neurons;
+using System;
 
-namespace works.ei8.Cortex.MemoryImage.Domain.Model.SpikeResults
+namespace ei8.Cortex.Spiker.Domain.Model.SpikeResults
 {
     public interface ISpikeResultsService
     {

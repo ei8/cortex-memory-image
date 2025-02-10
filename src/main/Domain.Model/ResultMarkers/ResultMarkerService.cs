@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace works.ei8.Cortex.MemoryImage.Domain.Model.ResultMarkers
+namespace ei8.Cortex.Spiker.Domain.Model.ResultMarkers
 {
     public class ResultMarkerService : IResultMarkerService
     {

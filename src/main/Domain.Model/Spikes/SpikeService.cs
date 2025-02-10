@@ -1,10 +1,10 @@
-﻿using System;
+﻿using ei8.Cortex.Spiker.Domain.Model.Neurons;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using works.ei8.Cortex.MemoryImage.Domain.Model.Neurons;
 
-namespace works.ei8.Cortex.MemoryImage.Domain.Model.Spikes
+namespace ei8.Cortex.Spiker.Domain.Model.Spikes
 {
     public class SpikeService : ISpikeService
     {
@@ -20,12 +20,9 @@ namespace works.ei8.Cortex.MemoryImage.Domain.Model.Spikes
 
             public NeuronCollection Neurons { get; set; }
         }
-
-        public event EventHandler<SpikeTargetEventArgs> Added;
-        public event EventHandler<SpikeTargetEventArgs> Removed;
+        
         public event EventHandler Spiking;
 
-        private IList<SpikeTarget> spikeTargets = new List<SpikeTarget>();
         private int spikeCount = 1;
         private NeuronCollection neurons;
 
@@ -34,31 +31,19 @@ namespace works.ei8.Cortex.MemoryImage.Domain.Model.Spikes
             this.neurons = neurons;
         }
 
-        public void Add(SpikeTarget value)
-        {
-            this.spikeTargets.Add(value);
-            this.Added?.Invoke(this, new SpikeTargetEventArgs(value));
-        }
-
-        public void Remove(SpikeTarget value)
-        {
-            this.spikeTargets.Remove(value);
-            this.Removed?.Invoke(this, new SpikeTargetEventArgs(value));
-        }
-
         public void SetSpikeCount(int value)
         {
             this.spikeCount = value;
         }
 
-        public void Spike()
+        public void Spike(IEnumerable<SpikeTarget> targets)
         {
             this.Spiking?.Invoke(this, EventArgs.Empty);
 
             for (int i = 1; i <= this.spikeCount; i++)
             {
-                var targets = this.Targets.Select(st => this.neurons[st.Id]);
-                foreach (Neuron target in targets)
+                var nts = targets.Select(st => this.neurons[st.Id]);
+                foreach (Neuron target in nts)
                 {
                     SpikeService.SpikeNeuron(
                         new SpikeParameters()
@@ -93,7 +78,5 @@ namespace works.ei8.Cortex.MemoryImage.Domain.Model.Spikes
                 );
             }
         }
-
-        public IEnumerable<SpikeTarget> Targets => this.spikeTargets;
     }
 }

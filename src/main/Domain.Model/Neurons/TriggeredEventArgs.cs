@@ -1,11 +1,8 @@
-﻿using System;
+﻿using ei8.Cortex.Spiker.Domain.Model.Spikes;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using works.ei8.Cortex.MemoryImage.Domain.Model.Spikes;
 
-namespace works.ei8.Cortex.MemoryImage.Domain.Model.Neurons
+namespace ei8.Cortex.Spiker.Domain.Model.Neurons
 {
     public class TriggeredEventArgs : EventArgs
     {

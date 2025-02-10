@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace works.ei8.Cortex.MemoryImage.Domain.Model.Neurons
+namespace ei8.Cortex.Spiker.Domain.Model.Neurons
 {
     public class FiredEventArgs : EventArgs
     {

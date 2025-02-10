@@ -1,10 +1,10 @@
-﻿using NLog;
+﻿using ei8.Cortex.Spiker.Domain.Model.Neurons;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using works.ei8.Cortex.MemoryImage.Domain.Model.Neurons;
 
-namespace works.ei8.Cortex.MemoryImage.Domain.Model.SpikeResults
+namespace ei8.Cortex.Spiker.Domain.Model.SpikeResults
 {
     public class SpikeResultsService : ISpikeResultsService
     {
@@ -19,6 +19,7 @@ namespace works.ei8.Cortex.MemoryImage.Domain.Model.SpikeResults
 
         public SpikeResultsService(NeuronCollection neurons)
         {
+            logger.Info("Initializing log...");
             this.neurons = neurons;
         }
 
@@ -26,7 +27,7 @@ namespace works.ei8.Cortex.MemoryImage.Domain.Model.SpikeResults
         {
             if (this.enabled)
             {
-                SpikeResultsService.logger.Info($"{value.ToString()} fired.{Environment.NewLine}");
+                SpikeResultsService.logger.Info($"{value.ToString()} fired.");
                 this.FiredAdded?.Invoke(this, new SpikeResultEventArgs(
                     new NeuronResult(firedEventArgs.FireInfo.Timestamp, value.Id, value.Data, NeurotransmitterEffect.Excite, firedEventArgs.Charge)
                     ));
@@ -43,8 +44,7 @@ namespace works.ei8.Cortex.MemoryImage.Domain.Model.SpikeResults
                 SpikeResultsService.logger.Info($"{value.ToString()} triggered." +
                     $"{Environment.NewLine}\t{triggeredEventArgs.SpikeOrigin.ToString()}" +
                     $"{Environment.NewLine}\tCharge: {triggeredEventArgs.Charge} mV" +
-                    $"{Environment.NewLine}\tPath: {path} >> {(neurons.Contains(triggeredEventArgs.TriggerInfo.PresynapticId) ? neurons[triggeredEventArgs.TriggerInfo.PresynapticId].Data : string.Empty)} " +
-                    $"{Environment.NewLine}");
+                    $"{Environment.NewLine}\tPath: {path} >> {(neurons.ContainsKey(triggeredEventArgs.TriggerInfo.PresynapticId) ? neurons[triggeredEventArgs.TriggerInfo.PresynapticId].Data : string.Empty)} ");
             }
         }
 
@@ -52,7 +52,7 @@ namespace works.ei8.Cortex.MemoryImage.Domain.Model.SpikeResults
         {
             string result = string.Join(
                 string.Empty,
-                triggers.Select(et => (et.Effect == NeurotransmitterEffect.Excite ? "+" : "-") + (neurons.Contains(et.PresynapticId) ? neurons[et.PresynapticId].Data : string.Empty))
+                triggers.Select(et => (et.Effect == NeurotransmitterEffect.Excite ? "+" : "-") + (neurons.ContainsKey(et.PresynapticId) ? neurons[et.PresynapticId].Data : string.Empty))
             );
             return result;
         }

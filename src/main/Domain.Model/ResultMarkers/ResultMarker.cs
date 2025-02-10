@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace works.ei8.Cortex.MemoryImage.Domain.Model.ResultMarkers
+﻿namespace ei8.Cortex.Spiker.Domain.Model.ResultMarkers
 {
     public class ResultMarker
     {
