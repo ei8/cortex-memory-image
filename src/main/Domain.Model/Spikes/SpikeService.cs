@@ -8,41 +8,19 @@ namespace ei8.Cortex.Spiker.Domain.Model.Spikes
 {
     public class SpikeService : ISpikeService
     {
-        private class SpikeParameters
-        {
-            public Neuron Target { get; set; }
-
-            public SpikeOrigin Origin { get; set; }
-
-            public TriggerInfo Trigger { get; set; }
-
-            public IEnumerable<FireInfo> Path { get; set; }
-
-            public NeuronCollection Neurons { get; set; }
-        }
-        
         public event EventHandler Spiking;
 
-        private int spikeCount = 1;
-        private NeuronCollection neurons;
-
-        public SpikeService(NeuronCollection neurons)
+        public SpikeService()
         {
-            this.neurons = neurons;
         }
 
-        public void SetSpikeCount(int value)
-        {
-            this.spikeCount = value;
-        }
-
-        public void Spike(IEnumerable<SpikeTarget> targets)
+        public void Spike(NeuronCollection neurons, IEnumerable<SpikeTarget> targets, int spikeCount)
         {
             this.Spiking?.Invoke(this, EventArgs.Empty);
 
-            for (int i = 1; i <= this.spikeCount; i++)
+            for (int i = 1; i <= spikeCount; i++)
             {
-                var nts = targets.Select(st => this.neurons[st.Id]);
+                var nts = targets.Select(st => neurons[st.Id]);
                 foreach (Neuron target in nts)
                 {
                     SpikeService.SpikeNeuron(
@@ -52,7 +30,7 @@ namespace ei8.Cortex.Spiker.Domain.Model.Spikes
                             Origin = new SpikeOrigin(Guid.NewGuid().ToString()),
                             Trigger = new TriggerInfo(DateTime.Now, NeurotransmitterEffect.Excite, 1f, "User"),
                             Path = new FireInfo[0],
-                            Neurons = this.neurons
+                            Neurons = neurons
                         }
                         );
                 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ei8.Cortex.Spiker.Domain.Model.Neurons;
+using System;
 using System.Collections.Generic;
 
 namespace ei8.Cortex.Spiker.Domain.Model.Spikes
@@ -7,8 +8,6 @@ namespace ei8.Cortex.Spiker.Domain.Model.Spikes
     {
         event EventHandler Spiking;
 
-        void SetSpikeCount(int value);
-
-        void Spike(IEnumerable<SpikeTarget> spikeTargets);
+        void Spike(NeuronCollection neurons, IEnumerable<SpikeTarget> spikeTargets, int spikeCount);
     }
 }
